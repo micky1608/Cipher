@@ -22,7 +22,7 @@
             * -s : substitution
             * -c : cesar
             * -v : vigenere
-            * -a : self-encryption
+            * -se : self-encryption
             * -p : playfair
  * args[3] : name of the file containing the original text, either the encrypted text if we want to decrypt or the original text if we want to encrypt.
  * args[4] : the key, either a figure (cesar), a word (vigenere) or the name of a file containing the substitution (substitution).
@@ -38,15 +38,12 @@ int main(int argc , char *args[]) {
     if(argc < 5 || argc > 6)
         error("Arguments are not corrects ! Please read the documentation before launching the programm");
 
-    struct InfoCipher* infoCipher = initInfoCipherFromArgs(args);
+    // get all the information provided by the user in a structure
+    struct InfoCipher infoCipher = initInfoCipherFromArgs(args + 1 , argc-1);
 
-
-
-
-
-
-
-
+    printf("MODE : %s\n" ,  infoCipher.mode);
+    printf("ALGO : %s\n" , infoCipher.algo);
+    printf("ORIGINAL FILE : %s\n" , infoCipher.originalFileName);
 
 
     exit(EXIT_SUCCESS);

@@ -7,7 +7,7 @@
 
 enum Mode { ENCRYPTION , DECRYPTION };
 
-enum Algorithm { SUBSTITUTION , CAESAR , VIGENERE, AUTO, PLAYFAR };
+enum Algorithm { SUBSTITUTION , CAESAR , VIGENERE, SELFENCRYPTION, PLAYFAIR };
 
 union Key {
     int keyInteger;

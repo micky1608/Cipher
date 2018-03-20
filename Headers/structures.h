@@ -5,6 +5,8 @@
 #ifndef DECRYPTION_STRUCTURES_H
 #define DECRYPTION_STRUCTURES_H
 
+#include "enum.h"
+
 
 struct InfoCipher {
     enum Mode mode;
