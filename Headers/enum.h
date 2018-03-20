@@ -9,10 +9,5 @@ enum Mode { ENCRYPTION , DECRYPTION };
 
 enum Algorithm { SUBSTITUTION , CAESAR , VIGENERE, SELFENCRYPTION, PLAYFAIR };
 
-union Key {
-    int keyInteger;
-    char *keyString;
-    char * keyFileName;
-};
 
 #endif //DECRYPTION_ENUM_H

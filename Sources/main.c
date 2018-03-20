@@ -12,6 +12,7 @@
 #include "../Headers/utilCipher.h"
 #include "../Headers/enum.h"
 #include "../Headers/structures.h"
+#include "../Headers/utilEnum.h"
 
 
 /**
@@ -41,9 +42,17 @@ int main(int argc , char *args[]) {
     // get all the information provided by the user in a structure
     struct InfoCipher infoCipher = initInfoCipherFromArgs(args);
 
-    printf("MODE : %s\n" ,  infoCipher.mode);
-    printf("ALGO : %s\n" , infoCipher.algo);
+
+    char *stringMode = stringFromMode(infoCipher.mode);
+    char *stringAlgo = stringFromAlgo(infoCipher.algo);
+
+    printf("MODE : %s\n" , stringMode);
+    printf("ALGO : %s\n" , stringAlgo);
     printf("ORIGINAL FILE : %s\n" , infoCipher.originalFileName);
+    printf("KEY : %s\n" , infoCipher.key);
+
+    free(stringMode);
+    free(stringAlgo);
 
 
     exit(EXIT_SUCCESS);

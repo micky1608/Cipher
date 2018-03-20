@@ -6,7 +6,6 @@
 
 /**
  * Take an array containing the arguments entered by the user when launching the program and return structure with those information.
- * The first argument, which is the name of the program, is not in the array.
  * @param args
  * @param length
  * @return
@@ -44,12 +43,7 @@ struct InfoCipher initInfoCipherFromArgs(char *args[]) {
 
     /* *************************************** SAVE THE KEY *************************************** */
 
-    if(infoCipher.algo == CAESAR)
-        infoCipher.key.keyInteger = atoi(args[4]);
-    else if(infoCipher.algo == VIGENERE || infoCipher.algo == SELFENCRYPTION || infoCipher.algo == PLAYFAIR)
-        infoCipher.key.keyString = args[4];
-    else if(infoCipher.algo == SUBSTITUTION)
-        infoCipher.key.keyFileName = args[4];
+    infoCipher.key = args[4];
 
 
     return infoCipher;
