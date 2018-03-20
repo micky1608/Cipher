@@ -11,45 +11,45 @@
  * @param length
  * @return
  */
-struct InfoCipher initInfoCipherFromArgs(char *args[] , int length) {
+struct InfoCipher initInfoCipherFromArgs(char *args[]) {
 
     struct InfoCipher infoCipher;
 
     /* *************************************** CHOOSE BETWEEN BETWEEN ENCRYPTION AND DECRYPTION *************************************** */
-    if(strcmp(args[0] , "-e"))
+    if(strcmp(args[1] , "-e") == 0)
         infoCipher.mode = ENCRYPTION;
-    else if(strcmp(args[0] , "-d"))
+    else if(strcmp(args[1] , "-d") == 0)
         infoCipher.mode = DECRYPTION;
     else
         error("The choice between encryption and decryption is not correct : Please select '-e' or '-d'");
 
     /* *************************************** CHOOSE THE ALGORITHM *************************************** */
 
-    if(strcmp(args[1] , "-s"))
+    if(strcmp(args[2] , "-s") == 0)
         infoCipher.algo = SUBSTITUTION;
-    else if(strcmp(args[1] , "-c"))
+    else if(strcmp(args[2] , "-c") == 0)
         infoCipher.algo = CAESAR;
-    else if(strcmp(args[1] , "-v"))
+    else if(strcmp(args[2] , "-v") == 0)
         infoCipher.algo = VIGENERE;
-    else if(strcmp(args[1] , "se"))
+    else if(strcmp(args[2] , "se") == 0)
         infoCipher.algo = SELFENCRYPTION;
-    else if(strcmp(args[1] , "-p" ))
+    else if(strcmp(args[2] , "-p" ) == 0)
         infoCipher.algo = PLAYFAIR;
     else
         error("The algorithm provided is not correct : Please choose between '-s', '-c', '-v', '-se' and '-p'");
 
     /* *************************************** SAVE THE ORIGINAL FILE NAME *************************************** */
 
-    infoCipher.originalFileName = args[2];
+    infoCipher.originalFileName = args[3];
 
     /* *************************************** SAVE THE KEY *************************************** */
 
     if(infoCipher.algo == CAESAR)
-        infoCipher.key.keyInteger = atoi(args[3]);
+        infoCipher.key.keyInteger = atoi(args[4]);
     else if(infoCipher.algo == VIGENERE || infoCipher.algo == SELFENCRYPTION || infoCipher.algo == PLAYFAIR)
-        infoCipher.key.keyString = args[3];
+        infoCipher.key.keyString = args[4];
     else if(infoCipher.algo == SUBSTITUTION)
-        infoCipher.key.keyFileName = args[3];
+        infoCipher.key.keyFileName = args[4];
 
 
     return infoCipher;

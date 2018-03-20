@@ -10,7 +10,7 @@
 #include "enum.h"
 #include "error.h"
 
-struct InfoCipher initInfoCipherFromArgs(char*[] , int);
+struct InfoCipher initInfoCipherFromArgs(char*[]);
 
 #endif //DECRYPTION_UTILCIPHER_H
 

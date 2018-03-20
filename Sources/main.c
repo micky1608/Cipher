@@ -39,7 +39,7 @@ int main(int argc , char *args[]) {
         error("Arguments are not corrects ! Please read the documentation before launching the programm");
 
     // get all the information provided by the user in a structure
-    struct InfoCipher infoCipher = initInfoCipherFromArgs(args + 1 , argc-1);
+    struct InfoCipher infoCipher = initInfoCipherFromArgs(args);
 
     printf("MODE : %s\n" ,  infoCipher.mode);
     printf("ALGO : %s\n" , infoCipher.algo);
