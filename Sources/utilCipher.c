@@ -5,6 +5,8 @@
 #include "../Headers/utilCipher.h"
 
 
-struct InfoCipher initInfoCipherFromArgs(char *args[]) {
+struct InfoCipher* initInfoCipherFromArgs(char *args[]) {
     //TODO
 }
+
+

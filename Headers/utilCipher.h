@@ -5,7 +5,7 @@
 #ifndef DECRYPTION_UTILCIPHER_H
 #define DECRYPTION_UTILCIPHER_H
 
-struct InfoCipher initInfoCipherFromArgs(char*[]);
+struct InfoCipher* initInfoCipherFromArgs(char*[]);
 
 #endif //DECRYPTION_UTILCIPHER_H
 
