@@ -3,6 +3,7 @@
 //
 
 #include "../Headers/utilCipher.h"
+#include "../Headers/utilEnum.h"
 
 /**
  * Take an array containing the arguments entered by the user when launching the program and return structure with those information.
@@ -45,9 +46,26 @@ struct InfoCipher initInfoCipherFromArgs(char *args[]) {
 
     infoCipher.key = args[4];
 
-
     return infoCipher;
+}
 
+/**
+ * Display the information about the cipher in the default output file.
+ * @param infoCipher
+ */
+void showRecapCipher (struct InfoCipher infoCipher) {
+
+    char *stringMode = stringFromMode(infoCipher.mode);
+    char *stringAlgo = stringFromAlgo(infoCipher.algo);
+
+    fprintf(output , "RECAP OF THE INFO :\n");
+    fprintf(output , "\tMODE : %s\n" , stringMode);
+    fprintf(output , "\tALGO : %s\n" , stringAlgo);
+    fprintf(output , "\tORIGINAL FILE : %s\n" , infoCipher.originalFileName);
+    fprintf(output , "\tKEY : %s\n" , infoCipher.key);
+
+    free(stringMode);
+    free(stringAlgo);
 }
 
 

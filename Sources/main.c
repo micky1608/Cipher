@@ -6,13 +6,8 @@
  * The algorithms supported by this program : substitution, caesar, Vigenère, self-encryption, playfair
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "../Headers/error.h"
-#include "../Headers/utilCipher.h"
-#include "../Headers/enum.h"
-#include "../Headers/structures.h"
-#include "../Headers/utilEnum.h"
+
+#include "../Headers/main.h"
 
 
 /**
@@ -39,21 +34,28 @@ int main(int argc , char *args[]) {
     if(argc < 5 || argc > 6)
         error("Arguments are not corrects ! Please read the documentation before launching the programm");
 
+    /* ******************************** Initiate the output file ********************************/
+
+    if(argc == 6)
+        changeDefaultOutput(args[5]);
+    else
+        initOutput();
+
+    /* ******************************** Recap Cipher information ********************************/
+
     // get all the information provided by the user in a structure
+
     struct InfoCipher infoCipher = initInfoCipherFromArgs(args);
 
+    showRecapCipher(infoCipher);
 
-    char *stringMode = stringFromMode(infoCipher.mode);
-    char *stringAlgo = stringFromAlgo(infoCipher.algo);
+    /* ******************************** Read the original file ********************************/
 
-    printf("MODE : %s\n" , stringMode);
-    printf("ALGO : %s\n" , stringAlgo);
-    printf("ORIGINAL FILE : %s\n" , infoCipher.originalFileName);
-    printf("KEY : %s\n" , infoCipher.key);
 
-    free(stringMode);
-    free(stringAlgo);
 
+
+
+    free(output);
 
     exit(EXIT_SUCCESS);
 }

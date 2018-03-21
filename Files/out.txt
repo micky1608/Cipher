@@ -1,0 +1,5 @@
+RECAP OF THE INFO :
+	MODE : encryption
+	ALGO : vigenere
+	ORIGINAL FILE : file
+	KEY : key
