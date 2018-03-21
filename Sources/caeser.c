@@ -3,7 +3,7 @@
 //
 
 
-#include <limits.h>
+
 #include "../Headers/caesar.h"
 
 
@@ -63,7 +63,53 @@ struct String caesarEncrypt(struct String originalString , char *key) {
 }
 
 struct String caesarDecrypt(struct String encryptedString , char *key) {
-    //TODO
+
+
+
+    struct String originalString;
+    originalString.length = encryptedString.length;
+    char *originalText = (char*)malloc(sizeof(char) * (encryptedString.length + 1));
+
+    // get the integer key for the algorithm from the string key
+    // the key must be between 0 and 25
+    int keyNum = keyNumberFromKeyString(key);
+
+    // check if the key is valid
+    if(keyNum < 0 || keyNum > 25)
+        keyNum = keyNum%26;
+
+
+    int encryptedPosition , originalPosition;
+
+    for(int i=0 ; i<encryptedString.length ; i++) {
+
+        // if the letter is in lower case
+        if(encryptedString.text[i] >= 'a' && encryptedString.text[i] <= 'z') {
+
+            encryptedPosition = encryptedString.text[i] - 'a';
+            originalPosition = (encryptedPosition - keyNum)%26;
+
+            originalText[i] = 'a' + originalPosition;
+        }
+
+            //if the letter is in upper case
+        else if(encryptedString.text[i] >= 'A' && encryptedString.text[i] <= 'Z') {
+
+            encryptedPosition = encryptedString.text[i] - 'A';
+            originalPosition = (encryptedPosition - keyNum)%26;
+
+            originalText[i] = 'A' + originalPosition;
+        }
+
+            // else the character is not modified
+        else
+            originalText[i] = encryptedString.text[i];
+    } //for
+
+    originalText[originalString.length] = '\0';
+    originalString.text = originalText;
+
+    return originalString;
 }
 
 int keyNumberFromKeyString (char *keyString) {
@@ -85,7 +131,7 @@ int keyNumberFromKeyString (char *keyString) {
     if(errno != 0 && keyNum == 0)
         error("Problem converting the string");
 
-    if(endptr == keyString) error("Your key doesn't contain any figure");
+    if(endptr == keyString) error("Your key isn't valid");
 
     return keyNum;
 }

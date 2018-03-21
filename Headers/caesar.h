@@ -7,6 +7,7 @@
 
 #include <stdlib.h>
 #include <errno.h>
+#include <limits.h>
 #include "error.h"
 #include "structures.h"
 #include "global.h"
