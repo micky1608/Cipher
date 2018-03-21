@@ -4,6 +4,7 @@
 
 #include "../Headers/utilCipher.h"
 #include "../Headers/utilEnum.h"
+#include "../Headers/caesar.h"
 
 /**
  * Take an array containing the arguments entered by the user when launching the program and return structure with those information.
@@ -66,6 +67,46 @@ void showRecapCipher (struct InfoCipher infoCipher) {
 
     free(stringMode);
     free(stringAlgo);
+}
+
+/**
+ * Once we have all the information to perform the program, this method is called.
+ * @param originalText
+ * @param mode
+ * @param algo
+ * @param key
+ */
+void work(struct String originalString , enum Mode mode , enum Algorithm algo , char *key) {
+
+    struct String result;
+
+    switch (algo) {
+        case CAESAR:
+            if(mode == ENCRYPTION)
+                result = caesarEncrypt(originalString , key);
+            else if(mode == DECRYPTION)
+                result = caesarDecrypt(originalString , key);
+            break;
+        case SUBSTITUTION:
+            //TODO
+            break;
+        case VIGENERE:
+            //TODO
+            break;
+        case SELFENCRYPTION:
+            //TODO
+            break;
+        case PLAYFAIR:
+            //TODO
+            break;
+    }
+
+    fprintf(output , "\nRESULT :\n%s\n" , result.text);
+
+    free(result.text);
+
+
+
 }
 
 

@@ -15,5 +15,7 @@ struct InfoCipher initInfoCipherFromArgs(char*[]);
 
 void showRecapCipher (struct InfoCipher);
 
+void work(struct String, enum Mode, enum Algorithm, char *);
+
 #endif //DECRYPTION_UTILCIPHER_H
 

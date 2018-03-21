@@ -6,12 +6,33 @@
 #include "../Headers/files.h"
 
 /**
- * Get a pointer of the content of a file.
+ * Get a the text of a file in a structure.
  * @param fileName
  * @return
  */
-char* readFile(char *fileName) {
-    //TODO
+struct String readFile(char *fileName) {
+
+    struct String stringText;
+    char *text;
+
+    int fd = open(fileName , O_RDONLY);
+
+    if(fd == -1) error("Can't open file for reading");
+
+    size_t size = fileSize(fileName);
+
+    text = (char*)malloc(sizeof(char)*(size + 1));
+
+    int nbRead = read(fd , text , size);
+
+    fprintf(output , "\nINFO READING : File size : %d\tNumber of read characters : %d\n" , size , nbRead);
+
+    text[size] = '\0';
+
+    stringText.text = text;
+    stringText.length = nbRead;
+
+    return stringText;
 }
 
 /**

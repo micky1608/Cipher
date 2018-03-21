@@ -10,7 +10,7 @@
 #include "error.h"
 #include "global.h"
 
-char* readFile(char*);
+struct String readFile(char*);
 
 void initOutput();
 

@@ -15,4 +15,9 @@ struct InfoCipher {
     char *key;
 };
 
+struct String {
+    char *text;
+    int length;
+};
+
 #endif //DECRYPTION_STRUCTURES_H
