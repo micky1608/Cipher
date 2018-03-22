@@ -91,7 +91,10 @@ void work(struct String originalString , enum Mode mode , enum Algorithm algo , 
             //TODO
             break;
         case VIGENERE:
-            //TODO
+            if(mode == ENCRYPTION)
+                result = vigenereEncrypt(originalString , key);
+            else if(mode == DECRYPTION)
+                result = vigenereDecrypt(originalString , key);
             break;
         case SELFENCRYPTION:
             //TODO

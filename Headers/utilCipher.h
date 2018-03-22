@@ -10,6 +10,7 @@
 #include "enum.h"
 #include "error.h"
 #include "global.h"
+#include "vigenere.h"
 
 struct InfoCipher initInfoCipherFromArgs(char*[]);
 
