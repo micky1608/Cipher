@@ -14,7 +14,7 @@ struct String playfairEncrypt (struct String originalString , char *key) {
     showMatrix(matrix);
     
 
-
+    //TODO
 
     free(key); free(matrix);
     encryptedText[encryptedString.length] = '\0';
@@ -26,7 +26,7 @@ struct String playfairEncrypt (struct String originalString , char *key) {
 //**********************************************************************************************************************************************************************
 
 struct String playfairDecrypt (struct String encryptedString , char *key) {
-
+        //TODO
 }
 
 //**********************************************************************************************************************************************************************
