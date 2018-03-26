@@ -8,6 +8,7 @@
 
 
 #include "../Headers/main.h"
+#include "../Headers/utilString.h"
 
 
 /**
@@ -29,7 +30,6 @@
  * @return
  */
 int main(int argc , char *args[]) {
-
 
     /* ******************************** Check the arguments ********************************/
 

@@ -10,6 +10,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "global.h"
+#include "utilString.h"
 
 struct String vigenereEncrypt(struct String, char*);
 struct String vigenereDecrypt(struct String, char*);

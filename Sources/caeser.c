@@ -54,6 +54,8 @@ struct String caesarEncrypt(struct String originalString , char *key) {
 
     } //for
 
+    free(key);
+
     encryptedText[encryptedString.length] = '\0';
 
     encryptedString.text = encryptedText;
@@ -108,6 +110,8 @@ struct String caesarDecrypt(struct String encryptedString , char *key) {
         else
             originalText[i] = encryptedString.text[i];
     } //for
+
+    free(key);
 
     originalText[originalString.length] = '\0';
     originalString.text = originalText;

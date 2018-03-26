@@ -100,7 +100,10 @@ void work(struct String originalString , enum Mode mode , enum Algorithm algo , 
             //TODO
             break;
         case PLAYFAIR:
-            //TODO
+            if(mode == ENCRYPTION)
+                result = playfairEncrypt(originalString , key);
+            else if(mode == DECRYPTION)
+                result = playfairDecrypt(originalString , key);
             break;
     }
 

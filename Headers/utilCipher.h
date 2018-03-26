@@ -11,6 +11,7 @@
 #include "error.h"
 #include "global.h"
 #include "vigenere.h"
+#include "playfair.h"
 
 struct InfoCipher initInfoCipherFromArgs(char*[]);
 
