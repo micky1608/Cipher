@@ -172,7 +172,7 @@ void posLetter(char *matrix , char letter1 , char letter2 , int *rowLetter1 , in
     // posLetter[0] : letter1
     // posLetter[1] : letter2
     // 0 : the letter is not configured
-    // the letter is already configured
+    // 1 : the letter is already configured
     short posLetterOk[2];
     posLetterOk[0] = 0; posLetterOk[1] = 0;
 
