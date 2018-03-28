@@ -7,13 +7,16 @@
 struct String playfairEncrypt (struct String originalString , char *key) {
 
     struct String encryptedString;
-    char *encryptedText = (char*)malloc(sizeof(char) * (originalString.length) + 1);
-    encryptedString.length = originalString.length;
+
     char *matrix = (char*)malloc(sizeof(char) * 25);
     initMatrix(&matrix , key);
+
     initOriginalString(&originalString);
+
+    encryptedString.length = originalString.length;
+    char *encryptedText = (char*)malloc(sizeof(char) * (originalString.length) + 1);
+    
     showMatrix(matrix);
-    printf("ORIGINAL STRING : '%s'\n" , originalString.text);
 
     int rowLetter1 , rowLetter2 , colLetter1 , colLetter2 , rowLetter1Enc , colLetter1Enc , rowLetter2Enc , colLetter2Enc;
 
@@ -23,22 +26,22 @@ struct String playfairEncrypt (struct String originalString , char *key) {
 
         if(rowLetter1 == rowLetter2) {
             rowLetter1Enc = rowLetter1;
-            colLetter1Enc = colLetter1 - 1;
-            if(colLetter1Enc == -1) colLetter1Enc = 4;
+            colLetter1Enc = colLetter1 + 1;
+            if(colLetter1Enc == 5) colLetter1Enc = 0;
 
             rowLetter2Enc = rowLetter2;
-            colLetter2Enc = colLetter2 - 1;
-            if(colLetter2Enc == -1) colLetter2Enc = 4;
+            colLetter2Enc = colLetter2 +1;
+            if(colLetter2Enc == 4) colLetter2Enc = 0;
         }
 
         else if(colLetter1 == colLetter2) {
-            rowLetter1Enc = rowLetter1 - 1;
+            rowLetter1Enc = rowLetter1 + 1;
             colLetter1Enc = colLetter1;
-            if(rowLetter1Enc == -1) rowLetter1Enc = 4;
+            if(rowLetter1Enc == 4) rowLetter1Enc = 0;
 
-            rowLetter2Enc = rowLetter2 - 1;
+            rowLetter2Enc = rowLetter2 + 1;
             colLetter2Enc = colLetter2;
-            if(rowLetter2Enc == -1) rowLetter2Enc = 4;
+            if(rowLetter2Enc == 4) rowLetter2Enc = 0;
         }
         else {
             rowLetter1Enc = rowLetter1;
@@ -62,12 +65,71 @@ struct String playfairEncrypt (struct String originalString , char *key) {
 //**********************************************************************************************************************************************************************
 
 struct String playfairDecrypt (struct String encryptedString , char *key) {
-        //TODO
+    struct String originalString;
+
+    char *matrix = (char*)malloc(sizeof(char) * 25);
+    initMatrix(&matrix , key);
+
+    originalString.length = encryptedString.length;
+    char *originalText = (char*)malloc(sizeof(char) * (originalString.length + 1));
+
+    toUpperCase(&encryptedString.text , strlen(encryptedString.text));
+    showMatrix(matrix);
+
+    int rowLetter1Enc , colLetter1Enc , rowLetter2Enc , colLetter2Enc , rowLetter1 , colLetter1 , rowLetter2 , colLetter2;
+
+    for(int i=0 ; i<encryptedString.length ; i+=2) {
+        // get the positions of the letters at index i and i+1
+        posLetter(matrix , encryptedString.text[i] , encryptedString.text[i+1] , &rowLetter1Enc , &colLetter1Enc , &rowLetter2Enc , &colLetter2Enc);
+
+
+        if(rowLetter1Enc == rowLetter2Enc) {
+            rowLetter1 = rowLetter1Enc;
+            colLetter1 = colLetter1Enc - 1;
+            if(colLetter1 == -1) colLetter1 = 4;
+
+            rowLetter2 = rowLetter2Enc;
+            colLetter2 = colLetter2Enc - 1;
+            if(colLetter2 == -1) colLetter2 = 4;
+        }
+
+        else if(colLetter1Enc == colLetter2Enc) {
+            rowLetter1 = rowLetter1Enc - 1;
+            colLetter1 = colLetter1Enc;
+            if(rowLetter1 == -1) rowLetter1 = 4;
+
+            rowLetter2 = rowLetter2Enc - 1;
+            colLetter2 = colLetter2Enc;
+            if(rowLetter2 == -1) rowLetter2 = 4;
+        }
+        else {
+            rowLetter1 = rowLetter1Enc;
+            colLetter1 = colLetter2Enc;
+
+            rowLetter2 = rowLetter2Enc;
+            colLetter2 = colLetter1Enc;
+        }
+
+        originalText[i] = matrix[5 * rowLetter1 + colLetter1];
+        originalText[i+1] = matrix[5*rowLetter2 + colLetter2];
+
+
+    }
+
+    free(key); free(matrix);
+    originalText[originalString.length] = '\0';
+    originalString.text = originalText;
+    return originalString;
+
 }
 
 //**********************************************************************************************************************************************************************
 //**********************************************************************************************************************************************************************
-
+/**
+ * Fill the matrix according to the playfair algorithm method using the word given as a key
+ * @param matrice
+ * @param keyWord
+ */
 void initMatrix (char **matrice , char *keyWord) {
 
     // get the size of the key
@@ -131,7 +193,10 @@ void initMatrix (char **matrice , char *keyWord) {
 
 //**********************************************************************************************************************************************************************
 //**********************************************************************************************************************************************************************
-
+/**
+ * Transform the text to upper case and add a parasite letter if the length is odd
+ * @param originalString
+ */
 void initOriginalString (struct String *originalString) {
 
     toUpperCase(&(originalString->text) , originalString->length);
@@ -203,12 +268,12 @@ void posLetter(char *matrix , char letter1 , char letter2 , int *rowLetter1 , in
 //**********************************************************************************************************************************************************************
 //**********************************************************************************************************************************************************************
 
-void showMatrix(char matrix[5][5]) {
+void showMatrix(char *matrix) {
     printf("***************** SHOW MATRIX *****************\n");
     
     for(int j = 0 ; j<5 ; j++) {
         for(int i=0 ; i<5 ; i++)
-            printf("%c\t" , matrix[j][i]);
+            printf("%c\t" , matrix[5*j + i]);
         printf("\n");
     }
     

@@ -16,7 +16,7 @@
 struct String playfairEncrypt (struct String, char*);
 struct String playfairDecrypt (struct String, char*);
 void initMatrix (char **matrice , char *keyWord);
-void showMatrix(char matrix[5][5]);
+void showMatrix(char* matrix);
 void initOriginalString (struct String *originalString);
 void posLetter(char *matrix , char letter1 , char letter2 , int *rowLetter1 , int *colLetter1 , int *rowLetter2 , int *colLetter2);
 
