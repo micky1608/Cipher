@@ -8,22 +8,35 @@ struct String playfairEncrypt (struct String originalString , char *key) {
 
     struct String encryptedString;
 
+    // init the matrix which will not contain any 'X'
+    // we consider that the 'X' is in the same case that 'W'
     char *matrix = (char*)malloc(sizeof(char) * 25);
     initMatrix(&matrix , key);
 
+    // transform the initial text in uppercase and add a parasite letter if the length is not even
+    // the parasite letter is 'W'
     initOriginalString(&originalString);
 
+    // allocation of memory for the encrypted text
     encryptedString.length = originalString.length;
     char *encryptedText = (char*)malloc(sizeof(char) * (originalString.length) + 1);
-    
+
+    // show the matrix either in the console or in the file chosen by the user to redirect the out stream
+    // this line can be deleted
     showMatrix(matrix);
 
+    // variable to store the positions of each letters in the matrix
+    // rows and columns start at 0 and finish at 4
     int rowLetter1 , rowLetter2 , colLetter1 , colLetter2 , rowLetter1Enc , colLetter1Enc , rowLetter2Enc , colLetter2Enc;
 
+    // iterate throughout the text reading letters by 2
     for(int i=0 ; i < originalString.length ; i+=2) {
+
         // get the positions of the letters at index i and i+1
         posLetter(matrix , originalString.text[i] , originalString.text[i+1] , &rowLetter1 , &colLetter1 , &rowLetter2 , &colLetter2);
 
+        // if the two letters are on the same row
+        // then we just shift to the right
         if(rowLetter1 == rowLetter2) {
             rowLetter1Enc = rowLetter1;
             colLetter1Enc = colLetter1 + 1;
@@ -34,6 +47,8 @@ struct String playfairEncrypt (struct String originalString , char *key) {
             if(colLetter2Enc == 4) colLetter2Enc = 0;
         }
 
+            // if the two letters are on the same column
+            // then we just shift to the bottom
         else if(colLetter1 == colLetter2) {
             rowLetter1Enc = rowLetter1 + 1;
             colLetter1Enc = colLetter1;
@@ -43,6 +58,8 @@ struct String playfairEncrypt (struct String originalString , char *key) {
             colLetter2Enc = colLetter2;
             if(rowLetter2Enc == 4) rowLetter2Enc = 0;
         }
+
+        // else we apply the main rule of the algorithm
         else {
             rowLetter1Enc = rowLetter1;
             colLetter1Enc = colLetter2;
@@ -51,9 +68,12 @@ struct String playfairEncrypt (struct String originalString , char *key) {
             colLetter2Enc = colLetter1;
         }
 
+        // when the positions of the two encrypted letters are known
+        // we add those letters in the encrypted text
         encryptedText[i] = matrix[5*rowLetter1Enc + colLetter1Enc];
         encryptedText[i+1] = matrix[5*rowLetter2Enc + colLetter2Enc];
-    }
+
+    } // for
 
     free(key); free(matrix);
     encryptedText[encryptedString.length] = '\0';
@@ -67,22 +87,32 @@ struct String playfairEncrypt (struct String originalString , char *key) {
 struct String playfairDecrypt (struct String encryptedString , char *key) {
     struct String originalString;
 
+    // init the matrix which will not contain any 'X'
+    // we consider that the 'X' is in the same case that 'W'
     char *matrix = (char*)malloc(sizeof(char) * 25);
     initMatrix(&matrix , key);
 
+    // allocation of memory for the original text
     originalString.length = encryptedString.length;
     char *originalText = (char*)malloc(sizeof(char) * (originalString.length + 1));
 
+    // transform the encrypted in uppercase
     toUpperCase(&encryptedString.text , strlen(encryptedString.text));
+
+    // OPTION : show the matrix either in the console or the file where the output stream is redirected
     showMatrix(matrix);
 
+    // positions of the letters in the matrix
+    // rows and columns start at 0 and finish at 4
     int rowLetter1Enc , colLetter1Enc , rowLetter2Enc , colLetter2Enc , rowLetter1 , colLetter1 , rowLetter2 , colLetter2;
 
+    // iterate throughout the encrypted text
     for(int i=0 ; i<encryptedString.length ; i+=2) {
         // get the positions of the letters at index i and i+1
         posLetter(matrix , encryptedString.text[i] , encryptedString.text[i+1] , &rowLetter1Enc , &colLetter1Enc , &rowLetter2Enc , &colLetter2Enc);
 
-
+        // if the two letters are on the same row
+        // then we just shift to the left
         if(rowLetter1Enc == rowLetter2Enc) {
             rowLetter1 = rowLetter1Enc;
             colLetter1 = colLetter1Enc - 1;
@@ -93,6 +123,8 @@ struct String playfairDecrypt (struct String encryptedString , char *key) {
             if(colLetter2 == -1) colLetter2 = 4;
         }
 
+            // if the two letters are on the same column
+            // then we just shift to the top
         else if(colLetter1Enc == colLetter2Enc) {
             rowLetter1 = rowLetter1Enc - 1;
             colLetter1 = colLetter1Enc;
@@ -102,6 +134,8 @@ struct String playfairDecrypt (struct String encryptedString , char *key) {
             colLetter2 = colLetter2Enc;
             if(rowLetter2 == -1) rowLetter2 = 4;
         }
+
+        // else we apply the main rule of the algorithm
         else {
             rowLetter1 = rowLetter1Enc;
             colLetter1 = colLetter2Enc;
@@ -110,6 +144,8 @@ struct String playfairDecrypt (struct String encryptedString , char *key) {
             colLetter2 = colLetter1Enc;
         }
 
+        // when the positions of the two original letters are known
+        // we add those letters in the original text
         originalText[i] = matrix[5 * rowLetter1 + colLetter1];
         originalText[i+1] = matrix[5*rowLetter2 + colLetter2];
 
@@ -154,18 +190,22 @@ void initMatrix (char **matrice , char *keyWord) {
         // get the letter to add in the matrix
         char letter = keyWord[i];
 
-        // check it is not already in
-        if(letterInMatrice[letter - 'A'] == 0) {
+        if(letter != 'X') {
+            // check it is not already in
+            if(letterInMatrice[letter - 'A'] == 0) {
 
-            // add in the matrix
-            *(*matrice + indexColumn + 5*indexRow) = letter;
+                // add in the matrix
+                *(*matrice + indexColumn + 5*indexRow) = letter;
 
-            letterInMatrice[letter - 'A'] = 1;
+                // indicate that this letter is now in the matrix
+                letterInMatrice[letter - 'A'] = 1;
 
-            indexColumn++;
-            if(indexColumn == 5) {
-                indexColumn = 0;
-                indexRow++;
+                // increment index
+                indexColumn++;
+                if(indexColumn == 5) {
+                    indexColumn = 0;
+                    indexRow++;
+                }
             }
         }
     }
@@ -175,11 +215,14 @@ void initMatrix (char **matrice , char *keyWord) {
 
         if(c != 'X') {
 
+                // add in the matrix if it is not yet
                 if(letterInMatrice[c - 'A'] == 0) {
                     *(*matrice + indexColumn + 5*indexRow) = c;
 
+                    // indicate that the letter was added in the matrix
                     letterInMatrice[c - 'A'] = 1;
 
+                    // increment index
                     indexColumn++;
                     if(indexColumn == 5) {
                         indexColumn = 0;
