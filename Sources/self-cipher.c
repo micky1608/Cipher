@@ -69,28 +69,44 @@ struct String selfCipherDecrypt (struct String encryptedString , char *key) {
 //**********************************************************************************************************************************************************************
 //**********************************************************************************************************************************************************************
 
+/**
+ * initialise the key to allow encryption with the self cipher algorithm. The key will be changed to upper case if it is not.
+ * Besides, the size of the key will be adapted to the size of the text.
+ * The key must contain only letters.
+ * @param originalKey
+ * @param originalText
+ * @return
+ */
 char* selfCipherInitKeyForEncryption(char *originalKey, char *originalText) {
 
     int i;
     int originalKeyLength = strlen(originalKey);
     int originalTextLength = strlen(originalText);
 
+    // if there are other characters except letters, the program stop because the algorithm is unusable
     if(containsOnlyLetters(originalKey , originalKeyLength) == -1)
         error("Key must contain only letters");
 
+    // change the key to upper case
     toUpperCase(&originalKey , originalKeyLength);
 
+    // if the key size is already the same that the text size, there are no more changes to do
     if(originalKeyLength == originalTextLength) return originalKey;
 
+    // memory allocation for the key with the good size
     char *newKey = (char*)malloc(sizeof(char) * (originalTextLength + 1));
 
+    // if the key is too long, it is just cut
     if(originalKeyLength > originalTextLength) {
         for(int i=0 ; i<originalTextLength ; i++)
             newKey[i] = originalKey[i];
     }
+
+    // if the key is shorter than the text, then we complete the key with the beginning of the text
     else if(originalKeyLength < originalTextLength) {
         int counterNewKey = 0;
 
+        // first we copy the original key
         for(i=0 ; i<originalKeyLength ; i++) {
             newKey[counterNewKey] = originalKey[i];
             counterNewKey++;
@@ -98,6 +114,7 @@ char* selfCipherInitKeyForEncryption(char *originalKey, char *originalText) {
 
         i=0;
 
+        // complete with the beginning of the text
         while(counterNewKey < originalTextLength) {
             newKey[counterNewKey] = originalText[i];
             i++;
