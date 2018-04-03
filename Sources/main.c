@@ -53,8 +53,6 @@ int main(int argc , char *args[]) {
 
     struct String originalString = readFile(infoCipher.originalFileName);
 
-    fprintf(output , "\nORIGINAL TEXT : \n%s\n" , originalString.text);
-
     /* ******************************** Start the work ********************************/
 
     work(originalString , infoCipher.mode , infoCipher.algo , infoCipher.key);

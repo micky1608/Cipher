@@ -96,9 +96,6 @@ struct String playfairDecrypt (struct String encryptedString , char *key) {
     originalString.length = encryptedString.length;
     char *originalText = (char*)malloc(sizeof(char) * (originalString.length + 1));
 
-    // transform the encrypted in uppercase
-    toUpperCase(&encryptedString.text , strlen(encryptedString.text));
-
     // OPTION : show the matrix either in the console or the file where the output stream is redirected
     showMatrix(matrix);
 
@@ -241,8 +238,6 @@ void initMatrix (char **matrice , char *keyWord) {
  * @param originalString
  */
 void initOriginalString (struct String *originalString) {
-
-    toUpperCase(&(originalString->text) , originalString->length);
 
     if(originalString->length % 2 == 0) return;
 

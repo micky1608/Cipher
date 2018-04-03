@@ -32,8 +32,8 @@ struct InfoCipher initInfoCipherFromArgs(char *args[]) {
         infoCipher.algo = CAESAR;
     else if(strcmp(args[2] , "-v") == 0)
         infoCipher.algo = VIGENERE;
-    else if(strcmp(args[2] , "se") == 0)
-        infoCipher.algo = SELFENCRYPTION;
+    else if(strcmp(args[2] , "-se") == 0)
+        infoCipher.algo = SELFCIPHER;
     else if(strcmp(args[2] , "-p" ) == 0)
         infoCipher.algo = PLAYFAIR;
     else
@@ -80,6 +80,15 @@ void work(struct String originalString , enum Mode mode , enum Algorithm algo , 
 
     struct String result;
 
+    // transform the original text to upper case
+    toUpperCase(&(originalString.text) , originalString.length);
+
+    // update the original string to delete all the spaces
+    trim(&(originalString.text) , originalString.length);
+    originalString.length = strlen(originalString.text);
+
+
+
     switch (algo) {
         case CAESAR:
             if(mode == ENCRYPTION)
@@ -96,8 +105,11 @@ void work(struct String originalString , enum Mode mode , enum Algorithm algo , 
             else if(mode == DECRYPTION)
                 result = vigenereDecrypt(originalString , key);
             break;
-        case SELFENCRYPTION:
-            //TODO
+        case SELFCIPHER:
+            if (mode == ENCRYPTION)
+                result = selfCipherEncrypt(originalString , key);
+            else if(mode == DECRYPTION)
+                result = selfCipherDecrypt(originalString , key);
             break;
         case PLAYFAIR:
             if(mode == ENCRYPTION)
@@ -107,6 +119,7 @@ void work(struct String originalString , enum Mode mode , enum Algorithm algo , 
             break;
     }
 
+    fprintf(output , "\nORIGINAL TEXT : \n%s\n" , originalString.text);
     fprintf(output , "\nRESULT :\n%s\n" , result.text);
 
     free(result.text);

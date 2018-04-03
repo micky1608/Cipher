@@ -25,3 +25,19 @@ int containsOnlyLetters( char *word , int wordLength) {
     return 1;
 
 }
+
+void trim (char **text , int length) {
+    int nbSpace = 0;
+
+    for(int i=0 ; i<length ; i++) {
+        if(*(*text + i) == ' ') {
+            nbSpace++;
+
+            for(int j=i ; j<length - 1 ; j++)
+                *(*text + j) = *(*text + j + 1);
+
+        }
+    }
+
+    *(*text + length - nbSpace) = '\0';
+}

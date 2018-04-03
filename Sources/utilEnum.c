@@ -28,7 +28,7 @@ char* stringFromAlgo (enum Algorithm algo) {
         strcpy(result , "caesar");
     else if(algo == VIGENERE)
         strcpy(result , "vigenere");
-    else if(algo == SELFENCRYPTION)
+    else if(algo == SELFCIPHER)
         strcpy(result , "self-encryption");
     else if(algo == PLAYFAIR)
         strcpy(result , "playfair");

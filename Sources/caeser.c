@@ -141,7 +141,7 @@ int keyNumberFromKeyString (char *keyString) {
     if(errno != 0 && keyNum == 0)
         error("Problem converting the string");
 
-    if(endptr == keyString) error("Your key isn't valid");
+    if(endptr == keyString) error("Your key isn't valid, please check that it only contains figures");
 
     return keyNum;
 }

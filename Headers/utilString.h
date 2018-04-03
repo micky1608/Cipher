@@ -7,5 +7,6 @@
 
 void toUpperCase( char **word , int wordLength );
 int containsOnlyLetters( char *word , int wordLength);
+void trim (char **text , int length);
 
 #endif //CIPHER_UTILSTRING_H

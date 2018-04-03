@@ -121,7 +121,7 @@ char* vigenereKeyGoodSize (char *key , int finalSize) {
     int originalSize = strlen(key);
 
     if(containsOnlyLetters(key , originalSize) == -1)
-        error("La clé ne doit contenir que des lettres");
+        error("Key must contain only letters");
 
     if(originalSize == finalSize)
         return key;

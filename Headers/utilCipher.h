@@ -12,6 +12,7 @@
 #include "global.h"
 #include "vigenere.h"
 #include "playfair.h"
+#include "self-cipher.h"
 
 struct InfoCipher initInfoCipherFromArgs(char*[]);
 
