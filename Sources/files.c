@@ -6,7 +6,7 @@
 #include "../Headers/files.h"
 
 /**
- * Get a the text of a file in a structure.
+ * Get the text of a file in a structure.
  * @param fileName
  * @return
  */
@@ -25,15 +25,18 @@ struct String readFile(char *fileName) {
 
     int nbRead = read(fd , text , size);
 
-    fprintf(output , "\nINFO READING : File size : %d\tNumber of read characters : %d\n" , size , nbRead);
-
     text[size] = '\0';
 
     stringText.text = text;
     stringText.length = nbRead;
 
+    close(fd);
+
     return stringText;
 }
+
+//**********************************************************************************************************************************************************************
+//**********************************************************************************************************************************************************************
 
 /**
  * Set a file as the default output file.
@@ -51,6 +54,11 @@ void changeDefaultOutput (char *fileName) {
     if(output == NULL) error("The file chosen to redirect the output can't be converted correctly");
 }
 
+//**********************************************************************************************************************************************************************
+//**********************************************************************************************************************************************************************
+
+
+
 /**
  * This function will be called if the user doesn't specify any file to redirect the output.
  * In this case, we just initiate the output by opening the standard output file.
@@ -61,6 +69,10 @@ void initOutput() {
 
     if(output == NULL) error("The file chosen to redirect the output can't be converted correctly");
 }
+
+//**********************************************************************************************************************************************************************
+//**********************************************************************************************************************************************************************
+
 
 /**
  * Get the size of a file using its name.

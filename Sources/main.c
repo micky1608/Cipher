@@ -31,7 +31,7 @@
  */
 int main(int argc , char *args[]) {
 
-    /* ******************************** Check the arguments ********************************/
+    /* ******************************** Check the arguments ******************************** */
 
     if(argc < 5 || argc > 6)
         error("Arguments are not corrects ! Please read the documentation before launching the programm");
@@ -43,26 +43,26 @@ int main(int argc , char *args[]) {
     else
         initOutput();
 
-    /* ******************************** Recap Cipher information ********************************/
+    /* ******************************** Recap Cipher information ******************************** */
 
     struct InfoCipher infoCipher = initInfoCipherFromArgs(args);
 
     showRecapCipher(infoCipher);
 
-    /* ******************************** Read the original file ********************************/
+    /* ******************************** Read the original file ******************************** */
 
     struct String originalString = readFile(infoCipher.originalFileName);
 
-    /* ******************************** Start the work ********************************/
+    /* ******************************** Start the work ******************************** */
 
     work(originalString , infoCipher.mode , infoCipher.algo , infoCipher.key);
 
-    /* ******************************** Free resources ********************************/
+    /* ******************************** Free resources ******************************** */
 
     free(originalString.text);
     free(output);
 
-    /* ******************************** Exit the program ********************************/
+    /* ******************************** Exit the program ******************************** */
 
     exit(EXIT_SUCCESS);
 }

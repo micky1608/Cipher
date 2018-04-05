@@ -16,7 +16,7 @@ struct InfoCipher initInfoCipherFromArgs(char *args[]) {
 
     struct InfoCipher infoCipher;
 
-    /* *************************************** CHOOSE BETWEEN BETWEEN ENCRYPTION AND DECRYPTION *************************************** */
+    /* *************************************** CHOOSE BETWEEN ENCRYPTION AND DECRYPTION *************************************** */
     if(strcmp(args[1] , "-e") == 0)
         infoCipher.mode = ENCRYPTION;
     else if(strcmp(args[1] , "-d") == 0)
@@ -50,6 +50,9 @@ struct InfoCipher initInfoCipherFromArgs(char *args[]) {
     return infoCipher;
 }
 
+//**********************************************************************************************************************************************************************
+//**********************************************************************************************************************************************************************
+
 /**
  * Display the information about the cipher in the default output file.
  * @param infoCipher
@@ -69,6 +72,10 @@ void showRecapCipher (struct InfoCipher infoCipher) {
     free(stringAlgo);
 }
 
+//**********************************************************************************************************************************************************************
+//**********************************************************************************************************************************************************************
+
+
 /**
  * Once we have all the information to perform the program, this method is called.
  * @param originalText
@@ -83,11 +90,12 @@ void work(struct String originalString , enum Mode mode , enum Algorithm algo , 
     // transform the original text to upper case
     toUpperCase(&(originalString.text) , originalString.length);
 
-    // update the original string to delete all the spaces
-    trim(&(originalString.text) , originalString.length);
-    originalString.length = strlen(originalString.text);
-
-
+    // Delete spaces in the original string for the algorithms that can't support spaces
+    // For caesar and substitution we will just ignore spaces
+    if(algo == VIGENERE || algo == SELFCIPHER || algo == PLAYFAIR) {
+        trim(&(originalString.text) , originalString.length);
+        originalString.length = strlen(originalString.text);
+    }
 
     switch (algo) {
         case CAESAR:

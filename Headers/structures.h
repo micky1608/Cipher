@@ -20,4 +20,9 @@ struct String {
     int length;
 };
 
+struct SubstitutionLink {
+    char originalLetter;
+    char encryptedLetter;
+};
+
 #endif //DECRYPTION_STRUCTURES_H
