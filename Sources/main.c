@@ -34,7 +34,7 @@ int main(int argc , char *args[]) {
     /* ******************************** Check the arguments ******************************** */
 
     if(argc < 5 || argc > 6)
-        error("Arguments are not corrects ! Please read the documentation before launching the programm");
+        error("Arguments are not corrects ! Please read the documentation before launching the programm" , NULL);
 
     /* ******************************** Initiate the output file ********************************/
 

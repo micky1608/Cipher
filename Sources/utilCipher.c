@@ -22,7 +22,7 @@ struct InfoCipher initInfoCipherFromArgs(char *args[]) {
     else if(strcmp(args[1] , "-d") == 0)
         infoCipher.mode = DECRYPTION;
     else
-        error("The choice between encryption and decryption is not correct : Please select '-e' or '-d'");
+        error("The choice between encryption and decryption is not correct : Please select '-e' or '-d'" , NULL);
 
     /* *************************************** CHOOSE THE ALGORITHM *************************************** */
 
@@ -37,7 +37,7 @@ struct InfoCipher initInfoCipherFromArgs(char *args[]) {
     else if(strcmp(args[2] , "-p" ) == 0)
         infoCipher.algo = PLAYFAIR;
     else
-        error("The algorithm provided is not correct : Please choose between '-s', '-c', '-v', '-se' and '-p'");
+        error("The algorithm provided is not correct : Please choose between '-s', '-c', '-v', '-se' and '-p'" , NULL);
 
     /* *************************************** SAVE THE ORIGINAL FILE NAME *************************************** */
 
@@ -105,7 +105,10 @@ void work(struct String originalString , enum Mode mode , enum Algorithm algo , 
                 result = caesarDecrypt(originalString , key);
             break;
         case SUBSTITUTION:
-            //TODO
+            if(mode == ENCRYPTION)
+                result = substitutionEncrypt(originalString , key);
+            else if (mode == DECRYPTION)
+                result = substitutionDecrypt(originalString , key);
             break;
         case VIGENERE:
             if(mode == ENCRYPTION)

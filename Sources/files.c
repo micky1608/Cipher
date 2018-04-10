@@ -17,7 +17,7 @@ struct String readFile(char *fileName) {
 
     int fd = open(fileName , O_RDONLY);
 
-    if(fd == -1) error("Can't open file for reading");
+    if(fd == -1) error("Can't open file for reading" , fileName);
 
     size_t size = fileSize(fileName);
 
@@ -47,11 +47,11 @@ void changeDefaultOutput (char *fileName) {
     // open the file
     int fd = open(fileName , O_WRONLY | O_TRUNC);
 
-    if(fd == -1) error("Don't manage to open the file for the redirection of the output");
+    if(fd == -1) error("Don't manage to open the file for the redirection of the output" , fileName);
 
     output = fdopen(fd , "w");
 
-    if(output == NULL) error("The file chosen to redirect the output can't be converted correctly");
+    if(output == NULL) error("The file chosen to redirect the output can't be converted correctly" , fileName);
 }
 
 //**********************************************************************************************************************************************************************
@@ -67,7 +67,7 @@ void initOutput() {
 
     output = fdopen(1 , "w");
 
-    if(output == NULL) error("The file chosen to redirect the output can't be converted correctly");
+    if(output == NULL) error("The file chosen to redirect the output can't be converted correctly" , NULL);
 }
 
 //**********************************************************************************************************************************************************************
@@ -85,10 +85,10 @@ size_t fileSize (char *fileName) {
 
     int fd = open(fileName , O_RDONLY);
 
-    if(fd == -1) error("Can't get the size of the file");
+    if(fd == -1) error("Can't get the size of the file" , fileName);
 
     if( fstat(fd , &infoFile) != 0 )
-        error("Can't get the stat structure");
+        error("Can't get the stat  from the file" , fileName);
 
     close(fd);
 

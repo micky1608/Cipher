@@ -18,7 +18,7 @@ struct String selfCipherEncrypt (struct String originalString , char *key) {
         originalposition = originalString.text[i] - 'A';
         keyPosition = key[i] - 'A';
         encryptedPosition = (originalposition + keyPosition) % 26;
-        encryptedText[i] = 'A' + encryptedPosition;
+        encryptedText[i] = (char)('A' + encryptedPosition);
     }
 
     free(key);
@@ -48,7 +48,7 @@ struct String selfCipherDecrypt (struct String encryptedString , char *key) {
         keyPosition = key[counterKey] - 'A';
         originalposition = encryptedPosition - keyPosition;
         originalposition = (originalposition < 0) ? originalposition+26 : originalposition;
-        originalText[i] = 'A' + originalposition;
+        originalText[i] = (char)('A' + originalposition);
 
         counterKey++;
         if(counterKey == keySize) {
@@ -85,7 +85,7 @@ char* selfCipherInitKeyForEncryption(char *originalKey, char *originalText) {
 
     // if there are other characters except letters, the program stop because the algorithm is unusable
     if(containsOnlyLetters(originalKey , originalKeyLength) == -1)
-        error("Key must contain only letters");
+        error("Key must contain only letters" , originalKey);
 
     // change the key to upper case
     toUpperCase(&originalKey , originalKeyLength);
@@ -98,7 +98,7 @@ char* selfCipherInitKeyForEncryption(char *originalKey, char *originalText) {
 
     // if the key is too long, it is just cut
     if(originalKeyLength > originalTextLength) {
-        for(int i=0 ; i<originalTextLength ; i++)
+        for(i=0 ; i<originalTextLength ; i++)
             newKey[i] = originalKey[i];
     }
 

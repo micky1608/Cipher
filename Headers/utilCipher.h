@@ -13,6 +13,7 @@
 #include "vigenere.h"
 #include "playfair.h"
 #include "self-cipher.h"
+#include "substitution.h"
 
 struct InfoCipher initInfoCipherFromArgs(char*[]);
 

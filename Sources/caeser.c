@@ -37,7 +37,7 @@ struct String caesarEncrypt(struct String originalString , char *key) {
             originalPosition = originalString.text[i] - 'a';
             encryptedPosition = (originalPosition + keyNum)%26;
 
-            encryptedText[i] = 'a' + encryptedPosition;
+            encryptedText[i] = (char)('a' + encryptedPosition);
         }
 
         //if the letter is in upper case
@@ -45,7 +45,7 @@ struct String caesarEncrypt(struct String originalString , char *key) {
             originalPosition = originalString.text[i] - 'A';
             encryptedPosition = (originalPosition + keyNum)%26;
 
-           encryptedText[i] = 'A' + encryptedPosition;
+           encryptedText[i] = (char)('A' + encryptedPosition);
         }
 
             // else the character is not modified
@@ -94,7 +94,7 @@ struct String caesarDecrypt(struct String encryptedString , char *key) {
             encryptedPosition = encryptedString.text[i] - 'a';
             originalPosition = (encryptedPosition - keyNum)%26;
 
-            originalText[i] = 'a' + originalPosition;
+            originalText[i] = (char)('a' + originalPosition);
         }
 
             //if the letter is in upper case
@@ -103,7 +103,7 @@ struct String caesarDecrypt(struct String encryptedString , char *key) {
             encryptedPosition = encryptedString.text[i] - 'A';
             originalPosition = (encryptedPosition - keyNum)%26;
 
-            originalText[i] = 'A' + originalPosition;
+            originalText[i] = (char)('A' + originalPosition);
         }
 
             // else the character is not modified
@@ -133,15 +133,15 @@ int keyNumberFromKeyString (char *keyString) {
 
     if(errno == ERANGE) {
         if(keyNum == LONG_MIN)
-            error("Your key is too small");
+            error("Your key is too small" , NULL);
         if(keyNum == LONG_MAX)
-            error("Your key is too high");
+            error("Your key is too high" , NULL);
     }
 
     if(errno != 0 && keyNum == 0)
-        error("Problem converting the string");
+        error("Problem converting the string" , NULL);
 
-    if(endptr == keyString) error("Your key isn't valid, please check that it only contains figures");
+    if(endptr == keyString) error("Your key isn't valid, please check that it only contains figures" , NULL);
 
     return keyNum;
 }

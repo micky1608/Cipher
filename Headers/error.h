@@ -9,7 +9,7 @@
     #include <stdlib.h>
     #include <stdio.h>
 
-    void error(char*);
+void error(char *message , char *param);
 
 
 #endif //DECRYPTION_ERROR_H

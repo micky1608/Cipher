@@ -28,7 +28,7 @@ struct String vigenereEncrypt(struct String originalString , char *key ) {
 
             originalPosition = originalString.text[i] - 'A';
             keyPosition = key[i] - 'A';
-            encryptedText[i] = 'A' + (originalPosition + keyPosition) % 26;
+            encryptedText[i] = (char)('A' + (originalPosition + keyPosition) % 26);
 
         }
 
@@ -41,7 +41,7 @@ struct String vigenereEncrypt(struct String originalString , char *key ) {
 
             originalPosition = originalString.text[i] - 'a';
             keyPosition = key[i] - 'a';
-            encryptedText[i] = 'a' + (originalPosition + keyPosition)%26;
+            encryptedText[i] = (char)('a' + (originalPosition + keyPosition)%26);
         }
 
         else
@@ -82,7 +82,7 @@ struct String vigenereDecrypt(struct String encryptedString , char *key) {
             keyPosition = key[i] - 'A';
             originalPosition = (encryptedPosition - keyPosition) % 26;
             originalPosition = (originalPosition < 0) ? originalPosition + 26 : originalPosition;
-            originalText[i] = 'A' + originalPosition;
+            originalText[i] = (char)('A' + originalPosition);
 
         }
 
@@ -97,7 +97,7 @@ struct String vigenereDecrypt(struct String encryptedString , char *key) {
             keyPosition = key[i] - 'a';
             originalPosition = (encryptedPosition - keyPosition);
             originalPosition = (originalPosition < 0) ? originalPosition + 26 : originalPosition;
-            originalText[i] = 'a' + originalPosition;
+            originalText[i] = (char)('a' + originalPosition);
 
         }
 
@@ -121,7 +121,7 @@ char* vigenereKeyGoodSize (char *key , int finalSize) {
     int originalSize = strlen(key);
 
     if(containsOnlyLetters(key , originalSize) == -1)
-        error("Key must contain only letters");
+        error("Key must contain only letters" , key);
 
     if(originalSize == finalSize)
         return key;

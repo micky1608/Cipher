@@ -4,8 +4,15 @@
 
 #include "../Headers/error.h"
 
-void error(char *message) {
-    perror(message);
+void error(char *message , char *param) {
+    if(param == NULL)
+        fprintf(stderr , message);
+
+    else
+        fprintf(stderr , "%s -> %s" , message , param);
+
+    perror(" ");
+
     exit(EXIT_FAILURE);
 }
 

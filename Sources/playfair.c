@@ -169,7 +169,7 @@ void initMatrix (char **matrice , char *keyWord) {
     int keyWordSize = strlen(keyWord);
 
     if(containsOnlyLetters(keyWord , keyWordSize) == -1)
-        error("La cle ne doit contenir que des lettres");
+        error("Key must contain only letters" , keyWord);
 
     // transform the key to upper case if it is not
     toUpperCase(&keyWord , keyWordSize);
